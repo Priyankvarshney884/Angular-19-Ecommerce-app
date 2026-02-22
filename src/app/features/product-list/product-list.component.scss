@@ -1,0 +1,121 @@
+.page {
+  display: grid;
+  gap: 1rem;
+  color: #fff;
+}
+
+.page-header h1 {
+  margin-bottom: 0.35rem;
+}
+
+.page-header p {
+  margin: 0;
+  color: #e4f4eb;
+}
+
+.filters {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.filters input {
+  border: 1px solid #95c6ab;
+  background: #fff;
+  color: #103729;
+  border-radius: 0.65rem;
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+}
+
+.state {
+  padding: 1rem;
+  border: 1px solid #bfe6cd;
+  border-radius: 0.7rem;
+  background: #174233;
+}
+
+.state.error {
+  border-color: #ffd9d9;
+  color: #ffecec;
+  background: #5e2730;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.card {
+  border: 1px solid #bfe6cd;
+  background: #174233;
+  border-radius: 0.9rem;
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.6rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+button,
+a {
+  border-radius: 0.65rem;
+  font: inherit;
+}
+
+button {
+  border: 1px solid #fff;
+  background: #fff;
+  color: #103628;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #bfe6cd;
+  padding: 0.45rem 0.65rem;
+}
+
+button:hover {
+  background: #ebfff2;
+}
+
+a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

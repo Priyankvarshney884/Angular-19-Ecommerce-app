@@ -1,0 +1,103 @@
+.page {
+  display: grid;
+  gap: 1rem;
+  color: #fff;
+}
+
+.state {
+  padding: 1rem;
+  border: 1px solid #bfe6cd;
+  border-radius: 0.7rem;
+  background: #174233;
+}
+
+.table {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  border: 1px solid #bfe6cd;
+  background: #174233;
+  border-radius: 0.8rem;
+  padding: 0.75rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+}
+
+.row h2,
+.row p {
+  margin: 0;
+}
+
+.row input {
+  width: 100%;
+  max-width: 7rem;
+  border: 1px solid #95c6ab;
+  background: #fff;
+  color: #103729;
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.55rem;
+  font: inherit;
+}
+
+.row button,
+header a {
+  border-radius: 0.65rem;
+  font: inherit;
+  text-decoration: none;
+}
+
+.row button {
+  border: 1px solid #ffd9d9;
+  color: #ffecec;
+  background: transparent;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.row button:hover {
+  background: rgba(255, 217, 217, 0.12);
+}
+
+header a {
+  color: #fff;
+  border: 1px solid #bfe6cd;
+  padding: 0.4rem 0.7rem;
+}
+
+header a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.summary {
+  justify-self: end;
+  border: 1px solid #bfe6cd;
+  background: #174233;
+  border-radius: 0.8rem;
+  padding: 0.75rem;
+  min-width: 220px;
+}
+
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (min-width: 900px) {
+  .row {
+    grid-template-columns: 1.5fr 90px 120px auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

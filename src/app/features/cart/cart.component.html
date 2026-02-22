@@ -1,0 +1,58 @@
+<section class="page">
+  <header class="page-header">
+    <h1>Your cart</h1>
+    <a class="link-btn" routerLink="/product-list">Continue shopping</a>
+  </header>
+
+  @if (!cartFacade.items().length) {
+    <section class="empty-state" role="status" aria-live="polite">
+      <p>Your cart is empty.</p>
+      <a class="secondary-btn" routerLink="/product-list">Browse products</a>
+    </section>
+  } @else {
+    <section class="list" aria-label="Shopping cart items">
+      @for (item of cartFacade.items(); track item.product.code) {
+        <article class="row">
+          <div class="item-info">
+            <h2>{{ item.product.name }}</h2>
+            <p>Unit price: {{ item.product.price }} {{ item.product.currencyIso || 'USD' }}</p>
+          </div>
+
+          <div class="qty-wrap">
+            <label [for]="'qty-' + item.product.code">Quantity</label>
+            <input
+              [id]="'qty-' + item.product.code"
+              type="number"
+              min="1"
+              inputmode="numeric"
+              [value]="item.quantity"
+              (input)="onQuantityChange(item.product.code, $any($event.target).value)"
+            />
+          </div>
+
+          <p class="line-total" aria-label="Line total">
+            {{ item.product.price * item.quantity }} {{ item.product.currencyIso || 'USD' }}
+          </p>
+
+          <button
+            type="button"
+            class="danger-btn"
+            [attr.aria-label]="'Remove ' + item.product.name + ' from cart'"
+            (click)="cartFacade.removeItem(item.product.code)"
+          >
+            Remove
+          </button>
+        </article>
+      }
+    </section>
+
+    <aside class="summary" aria-label="Cart summary">
+      <p>Total items: <strong>{{ cartFacade.totalItems() }}</strong></p>
+      <p>Subtotal: <strong>{{ cartFacade.subtotal() }} USD</strong></p>
+      <div class="summary-actions">
+        <a class="secondary-btn" routerLink="/product-list">Add more items</a>
+        <a class="primary-btn" routerLink="/checkout">Proceed to checkout</a>
+      </div>
+    </aside>
+  }
+</section>

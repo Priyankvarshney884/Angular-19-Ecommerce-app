@@ -1,0 +1,42 @@
+[
+  {
+    "code": "P1000",
+    "name": "Aurora Wireless Headphones",
+    "description": "Over-ear headphones with active noise cancellation and 30-hour battery life.",
+    "price": 179.99,
+    "currencyIso": "USD",
+    "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"
+  },
+  {
+    "code": "P1001",
+    "name": "Orbit Smartwatch",
+    "description": "Fitness-focused smartwatch with GPS, sleep tracking, and heart-rate alerts.",
+    "price": 249.5,
+    "currencyIso": "USD",
+    "imageUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600"
+  },
+  {
+    "code": "P1002",
+    "name": "Nimbus Mechanical Keyboard",
+    "description": "Hot-swappable mechanical keyboard with tactile switches and backlight profiles.",
+    "price": 129,
+    "currencyIso": "USD",
+    "imageUrl": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600"
+  },
+  {
+    "code": "P1003",
+    "name": "Pulse USB-C Hub",
+    "description": "7-in-1 USB-C hub with HDMI, Ethernet, SD card, and fast power delivery.",
+    "price": 69.99,
+    "currencyIso": "USD",
+    "imageUrl":"https://unsplash.com/photos/black-and-gray-portable-speaker-on-white-book-4nVJUZEJb3s"
+  },
+  {
+    "code": "P1004",
+    "name": "Summit 4K Monitor",
+    "description": "27-inch 4K monitor with HDR support and ergonomic stand.",
+    "price": 399,
+    "currencyIso": "USD",
+    "imageUrl": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600"
+  }
+]
