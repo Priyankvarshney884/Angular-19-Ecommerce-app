@@ -1,16 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProductFacade } from '../../facades/product.facade';
 import { CartFacade } from '../../facades/cart.facade';
-import { RouterLink } from "@angular/router";
+import { Product } from '../../shared/models/product.model';
+import { ProductListViewComponent } from "../../ui/product-list-view/product-list-view.component";
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
-  imports: [RouterLink]
+  imports: [ProductListViewComponent]
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
 
   readonly productFacade = inject(ProductFacade);
   private readonly cartFacade = inject(CartFacade);
@@ -19,25 +20,23 @@ export class ProductListComponent {
     this.productFacade.loadProducts();
   }
 
-  onSearhTermChange(value: string): void {
+  onSearchTermChange(value: string): void {
     this.productFacade.setSearchTerm(value);
   }
 
-  onMinPriceChange(value: string): void {
-    const parsedValue = Number(value);
-    this.productFacade.setMinPrice(value ? parsedValue : null);
+  onMinPriceChange(value: number | null): void {
+    this.productFacade.setMinPrice(value);
   }
 
-  onMaxPriceChange(value: string): void {
-    const parsedValue = Number(value);
-    this.productFacade.setMaxPrice(value ? parsedValue : null);
+  onMaxPriceChange(value: number | null): void {
+    this.productFacade.setMaxPrice(value);
   }
 
-  addToCart(productCode: string): void {
-     const product = this.productFacade.products().find((item) => item.code === productCode);
-    if (product) {
-      this.cartFacade.addToCart(product);
-    }
+  clearFilters(): void {
+    this.productFacade.clearFilters();
   }
-  
+
+  addToCart(product: Product): void {
+    this.cartFacade.addToCart(product);
+  }
 }

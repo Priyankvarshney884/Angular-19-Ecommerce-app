@@ -14,9 +14,9 @@ export class ProductConnector {
 
     }
 
-    getProduct(code:string): Observable<Product | undefined>
+    getProductByCode(code:string): Observable<Product | undefined>
     {
-        return this.adapter.getProduct(code);
+        return this.adapter.getProductByCode(code);
     }
     
 }

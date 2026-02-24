@@ -1,13 +1,13 @@
 <section class="page">
   <header class="page-header">
     <h1>Your cart</h1>
-    <a class="link-btn" routerLink="/product-list">Continue shopping</a>
+    <a class="link-btn" routerLink="/products">Continue shopping</a>
   </header>
 
   @if (!cartFacade.items().length) {
     <section class="empty-state" role="status" aria-live="polite">
       <p>Your cart is empty.</p>
-      <a class="secondary-btn" routerLink="/product-list">Browse products</a>
+      <a class="secondary-btn" routerLink="/products">Browse products</a>
     </section>
   } @else {
     <section class="list" aria-label="Shopping cart items">
@@ -50,7 +50,7 @@
       <p>Total items: <strong>{{ cartFacade.totalItems() }}</strong></p>
       <p>Subtotal: <strong>{{ cartFacade.subtotal() }} USD</strong></p>
       <div class="summary-actions">
-        <a class="secondary-btn" routerLink="/product-list">Add more items</a>
+        <a class="secondary-btn" routerLink="/products">Add more items</a>
         <a class="primary-btn" routerLink="/checkout">Proceed to checkout</a>
       </div>
     </aside>
