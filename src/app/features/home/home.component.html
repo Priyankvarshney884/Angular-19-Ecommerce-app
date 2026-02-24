@@ -1,1 +1,13 @@
-<p>home works!</p>
+<section class="home">
+  @if (!cmsEnabled) {
+    <p class="state error">CMS rendering is disabled by configuration.</p>
+  } @else if (cmsFacade.loading()) {
+    <p class="state">Loading home layout...</p>
+  } @else if (cmsFacade.error()) {
+    <p class="state error">{{ cmsFacade.error() }}</p>
+  } @else {
+    @if (cmsFacade.homeLayout(); as layout) {
+      <app-cms-page-layout [layout]="layout" />
+    }
+  }
+</section>
