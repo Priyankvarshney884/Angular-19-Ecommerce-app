@@ -1,0 +1,13 @@
+<section class="cms-page">
+  @for (slot of layout().slots; track slot.id) {
+    <section class="slot" [attr.data-slot-id]="slot.id">
+      @for (component of slot.components; track component.uid) {
+        @if (getComponentType(component.type); as resolvedComponent) {
+          <ng-container
+            *ngComponentOutlet="resolvedComponent; inputs: getComponentInputs(component)"
+          />
+        }
+      }
+    </section>
+  }
+</section>

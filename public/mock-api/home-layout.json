@@ -1,0 +1,69 @@
+{
+  "pageId": "home",
+  "slots": [
+    {
+      "id": "Hero",
+      "components": [
+        {
+          "uid": "hero-main",
+          "type": "HeroBannerComponent",
+          "config": {
+            "eyebrow": "Storefront Lab",
+            "title": "Config-driven CMS Home",
+            "description": "This home page is assembled from JSON layout configuration through a component mapper.",
+            "ctaLabel": "Browse Products",
+            "ctaLink": "/products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Promos",
+      "components": [
+        {
+          "uid": "promo-shipping",
+          "type": "PromoStripComponent",
+          "config": {
+            "message": "Free shipping on orders over $100.",
+            "linkLabel": "Open Cart",
+            "link": "/cart"
+          }
+        },
+        {
+          "uid": "promo-cms",
+          "type": "PromoStripComponent",
+          "config": {
+            "message": "Swap this JSON to change home layout without template edits.",
+            "linkLabel": "View Products",
+            "link": "/products"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Highlights",
+      "components": [
+        {
+          "uid": "feature-architecture",
+          "type": "FeatureTileComponent",
+          "config": {
+            "title": "Spartacus-like Layers",
+            "description": "Facade, connector, and adapter boundaries remain intact.",
+            "linkLabel": "Read Workflow",
+            "link": "/products"
+          }
+        },
+        {
+          "uid": "feature-angular",
+          "type": "FeatureTileComponent",
+          "config": {
+            "title": "Angular 19 APIs",
+            "description": "Signals, input/output APIs, and defer blocks are in active use.",
+            "linkLabel": "Open Product List",
+            "link": "/products"
+          }
+        }
+      ]
+    }
+  ]
+}

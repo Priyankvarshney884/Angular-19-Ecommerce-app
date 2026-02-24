@@ -1,15 +1,21 @@
 :host {
-  display: grid;
-  place-items: center;
-  min-height: 55vh;
+  display: block;
 }
 
-p {
+.home {
+  display: grid;
+  gap: 1rem;
+}
+
+.state {
   margin: 0;
-  padding: 1rem 1.2rem;
-  border: 1px solid #bfe6cd;
-  border-radius: 0.8rem;
-  background: #174233;
-  color: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  padding: 0.8rem 1rem;
+  border-radius: 0.7rem;
+  background: #eef7ff;
+  color: #16405d;
+}
+
+.error {
+  background: #fff2f2;
+  color: #8d1f1f;
 }

@@ -1,0 +1,22 @@
+.promo {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  border: 1px solid #d5e7ef;
+  border-radius: 0.8rem;
+  background: #f8fcff;
+}
+
+p {
+  margin: 0;
+  color: #204a66;
+  font-weight: 500;
+}
+
+a {
+  text-decoration: none;
+  color: #0e5b85;
+  font-weight: 600;
+}
