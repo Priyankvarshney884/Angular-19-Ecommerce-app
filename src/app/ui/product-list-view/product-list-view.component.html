@@ -8,34 +8,34 @@
     <input
       type="text"
       placeholder="Search by name or description"
-      [value]="filters.searchTerm"
+      [value]="filters().searchTerm"
       (input)="onSearchTermInput($any($event.target).value)"
     />
     <input
       type="number"
       placeholder="Min Price"
-      [value]="filters.minPrice ?? ''"
+      [value]="filters().minPrice ?? ''"
       (input)="onMinPriceInput($any($event.target).value)"
     />
     <input
       type="number"
       placeholder="Max Price"
-      [value]="filters.maxPrice ?? ''"
+      [value]="filters().maxPrice ?? ''"
       (input)="onMaxPriceInput($any($event.target).value)"
     />
   </section>
 
   <button type="button" (click)="onClearFilters()">Clear Filters</button>
 
-  @if (loading) {
+  @if (loading()) {
     <p class="state">Loading products...</p>
-  } @else if (error) {
-    <p class="state error">{{ error }}</p>
-  } @else if (!products.length) {
+  } @else if (error()) {
+    <p class="state error">{{ error() }}</p>
+  } @else if (!products().length) {
     <p class="state">No products found.</p>
   } @else {
     <section class="grid">
-      @for (product of products; track product.code) {
+      @for (product of products(); track product.code) {
         <article class="card">
           <img [src]="product.imageUrl || ''" [alt]="product.name" />
           <h2>{{ product.name }}</h2>

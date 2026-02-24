@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component,  input,  output } from '@angular/core';
 import { Product } from '../../shared/models/product.model';
 import { RouterLink } from "@angular/router";
 
@@ -10,10 +10,11 @@ import { RouterLink } from "@angular/router";
   imports: [RouterLink]
 })
 export class ProductDetailsViewComponent {
-  @Input( {required:true} ) loading = false;
- @Input({required: true}) error:string |null = null;
- @Input ({required :true}) product:Product |null = null;
- @Output() addToCart = new EventEmitter<void>();
+ readonly loading = input.required<boolean>();
+  readonly error = input.required<string | null>();
+  readonly product = input.required<Product | null>();
+  readonly addToCart = output<void>();
+
  
  onAddToCart(): void {
   this.addToCart.emit();

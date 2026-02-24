@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, output, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, output, Output } from '@angular/core';
 import { Product } from '../../shared/models/product.model';
 import { ProductFilter } from '../../facades/product.facade';
 import { RouterLink } from '@angular/router';
@@ -11,15 +11,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './product-list-view.component.scss'
 })
 export class ProductListViewComponent {
-  @Input({required:true}) loading = false;
-  @Input({required:true}) error:string |null = null;
-  @Input({required:true}) products:Product[] = [];
-  @Input({required:true}) filters:ProductFilter = {
+  readonly loading = input.required<boolean>();
+  readonly error = input.required<string | null>();
+  readonly products = input.required<Product[]>();
+  readonly filters = input<ProductFilter>({
     searchTerm: '',
     minPrice: null,
     maxPrice: null
+  });
 
-  }
 
   @Output() searchTermChange = new EventEmitter<String>();
   @Output() minPriceChange = new EventEmitter<number | null>();
