@@ -1,42 +1,11 @@
-<section class="page">
-    <header class="page-header">
-        <h1> All the Product are listed here </h1>
-        <p> This Application is majorly created for practicing Sap Sparatacus concepts </p>
-
-    </header>
-
-    <section class="filters">
-        <input type="text" placeholder="Search by Name or Description here " (input)="onSearhTermChange($any($event.target).value)">
-        <input type="number" placeholder="Min Price" (input)="onMinPriceChange($any($event.target).value)">
-        <input type="number" placeholder="Max Price" (input)="onMaxPriceChange($any($event.target).value)">
-    </section>
-
-    <button (click)="productFacade.clearFilters()">Clear Filters</button>
-
-    @if (productFacade.loading()) {
-        <p class="state">Loading products...</p>
-
-    }
-    @else if (productFacade.error()) {
-        <p class="state error">{{productFacade.error() }}</p>
-    }
-    @else if (!productFacade.fileteredProducts().length) {
-        <p class="state">No products found.</p>
-    }
-    @else {
-        <section class="grid">
-            @for (product of productFacade.fileteredProducts(); track product.code) {
-                <article class="card">
-                    <img [src]="product.imageUrl || ''" [alt]="product.name">
-                    <h2>{{product.name}}</h2>
-                    <p>{{product.description}}</p>
-             <p class="price">{{ product.price  }}</p>
-             <div class="actions">
-                <a [routerLink]="['/product', product.code]">View Details</a>
-                <button (click)="addToCart(product.code)">Add to Cart</button>
-             </div>
-                </article>
-                }
-        </section>
-    }
-</section>
+<app-product-list-view
+  [loading]="productFacade.loading()"
+  [error]="productFacade.error()"
+  [products]="productFacade.filteredProducts()"
+  [filters]="productFacade.filters()"
+  (searchTermChange)="onSearchTermChange($event.toString())"
+  (minPriceChange)="onMinPriceChange($event)"
+  (maxPriceChange)="onMaxPriceChange($event)"
+  (clearFilters)="clearFilters()"
+  (addToCart)="addToCart($event)"
+></app-product-list-view>

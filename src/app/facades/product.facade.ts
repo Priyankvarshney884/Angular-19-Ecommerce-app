@@ -5,7 +5,7 @@ import { firstValueFrom } from "rxjs";
 
 
 
-interface ProductFilter {
+export interface ProductFilter {
     searchTerm:string;
     minPrice:number | null;
     maxPrice:number | null;
@@ -15,6 +15,7 @@ interface ProductFilter {
 export class ProductFacade {
     // Facade for product data. Hides implementation details of data retrieval and mapping.}
     private readonly connector = inject(ProductConnector);
+    readonly selectedProduct = signal<Product | null>(null);
     readonly products = signal <Product[]>([]);
     readonly loading = signal(false);
     readonly error = signal<string | null>(null);
@@ -25,9 +26,9 @@ export class ProductFacade {
      });
     
 
-     readonly fileteredProducts = computed(()=>{
+     readonly filteredProducts = computed(()=>{
         const { searchTerm, minPrice, maxPrice } = this.filters();
-        const normalizedTerm = searchTerm.toLowerCase();
+         const normalizedTerm = searchTerm.trim().toLowerCase();
 
         return this.products().filter((product)=>{
             const matchesTerm = !normalizedTerm || product.name.toLowerCase().includes(normalizedTerm) || product.description?.toLowerCase().includes(normalizedTerm);
@@ -55,12 +56,37 @@ export class ProductFacade {
         }
      }
 
-     async getProductByCode(code:string): Promise<Product | undefined>{
-        if(!this.products().length){
-            await this.loadProducts();
+     async loadProductByCode(code:string): Promise<void>{
+        this.loading.set(true);
+        this.error.set(null);
+        this.selectedProduct.set(null);
+
+        try{
+            const product = await firstValueFrom(this.connector.getProductByCode(code));
+            if(!product){
+                this.error.set('Product not found.');
+                return;
+            }
+
+            this.selectedProduct.set(product);
+            this.products.update((currentProducts) => {
+                const productExists = currentProducts.some(p => p.code === product.code);
+              
+                return productExists ? currentProducts : [...currentProducts, product];
+
+            })
+        } catch {
+            this.error.set('Unable to load product details.');
+            } finally {
+            this.loading.set(false);
+            }
+
+
+    }
+        clearSelectedProduct(): void {
+            this.selectedProduct.set(null);
         }
-        return this.products().find(p => p.code === code);  
-     }
+
 
      setSearchTerm(searchTerm:string): void{
         this.filters.update((current)=>({...current, searchTerm}))

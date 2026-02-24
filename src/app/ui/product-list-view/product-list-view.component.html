@@ -1,0 +1,54 @@
+<section class="page">
+  <header class="page-header">
+    <h1>All products are listed here</h1>
+    <p>This application is primarily for practicing SAP Spartacus concepts.</p>
+  </header>
+
+  <section class="filters">
+    <input
+      type="text"
+      placeholder="Search by name or description"
+      [value]="filters.searchTerm"
+      (input)="onSearchTermInput($any($event.target).value)"
+    />
+    <input
+      type="number"
+      placeholder="Min Price"
+      [value]="filters.minPrice ?? ''"
+      (input)="onMinPriceInput($any($event.target).value)"
+    />
+    <input
+      type="number"
+      placeholder="Max Price"
+      [value]="filters.maxPrice ?? ''"
+      (input)="onMaxPriceInput($any($event.target).value)"
+    />
+  </section>
+
+  <button type="button" (click)="onClearFilters()">Clear Filters</button>
+
+  @if (loading) {
+    <p class="state">Loading products...</p>
+  } @else if (error) {
+    <p class="state error">{{ error }}</p>
+  } @else if (!products.length) {
+    <p class="state">No products found.</p>
+  } @else {
+    <section class="grid">
+      @for (product of products; track product.code) {
+        <article class="card">
+          <img [src]="product.imageUrl || ''" [alt]="product.name" />
+          <h2>{{ product.name }}</h2>
+          <p>{{ product.description }}</p>
+          <p class="price">
+            {{ product.price }} {{ product.currencyIso || 'USD' }}
+          </p>
+          <div class="actions">
+            <a [routerLink]="['/product', product.code]">View Details</a>
+            <button type="button" (click)="onAddToCart(product)">Add to Cart</button>
+          </div>
+        </article>
+      }
+    </section>
+  }
+</section>
