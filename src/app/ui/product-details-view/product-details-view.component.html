@@ -1,21 +1,19 @@
 <section class="page">
-    <a routerLink="/products">Back to Products</a>
+  <a routerLink="/products">Back to products</a>
 
-    @if(loading){
-        <p>Loading product details...</p>
-    }
-    @else if (error){
-        <p class="state error">{{error}}</p>
-    }
-    @else if(product){
-        <article class="card">
-            <img [src]="product.imageUrl || ''" [alt]="product.name" />
-            <div class="details">
-                <h1>{{product.name}}</h1>
-                <p>{{product.description}}</p>
-                <p class="price">${{product.price}} {{product.currencyIso}}</p>
-                <button> </button>
-            </div>
-        </article>
-    }
+  @if (loading()) {
+    <p class="state">Loading product details...</p>
+  } @else if (error()) {
+    <p class="state error">{{ error() }}</p>
+  } @else if (product()) {
+    <article class="card">
+      <img [src]="product()!.imageUrl || ''" [alt]="product()!.name" />
+      <div class="details">
+        <h1>{{ product()!.name }}</h1>
+        <p>{{ product()!.description }}</p>
+        <p class="price">{{ product()!.price }} {{ product()!.currencyIso || 'USD' }}</p>
+        <button type="button" (click)="onAddToCart()">Add to cart</button>
+      </div>
+    </article>
+  }
 </section>
