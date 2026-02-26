@@ -13,6 +13,12 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "de": "src/locale/messages.de.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -34,10 +40,19 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
+              "localize": [
+                "en",
+                "de"
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -59,6 +74,45 @@
                   "with": "src/enviornments/environment.development.ts"
                 }
               ],
+              "localize": false,
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "en": {
+              "localize": [
+                "en"
+              ]
+            },
+            "de": {
+              "localize": [
+                "de"
+              ]
+            },
+            "development-en": {
+              "fileReplacements": [
+                {
+                  "replace": "src/enviornments/environment.ts",
+                  "with": "src/enviornments/environment.development.ts"
+                }
+              ],
+              "localize": [
+                "en"
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "development-de": {
+              "fileReplacements": [
+                {
+                  "replace": "src/enviornments/environment.ts",
+                  "with": "src/enviornments/environment.development.ts"
+                }
+              ],
+              "localize": [
+                "de"
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -74,6 +128,12 @@
             },
             "development": {
               "buildTarget": "angular-self-code:build:development"
+            },
+            "en": {
+              "buildTarget": "angular-self-code:build:development-en"
+            },
+            "de": {
+              "buildTarget": "angular-self-code:build:development-de"
             }
           },
           "defaultConfiguration": "development"
