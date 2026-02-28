@@ -14,7 +14,9 @@ export class CartFacade {
     readonly items = signal<CartItem[]>([]);
 
     readonly totalItems = computed(() => this.items().reduce((total, item) => total + item.quantity, 0));
-
+     readonly subtotal = computed(() =>
+    this.items().reduce((total, item) => total + item.product.price * item.quantity, 0)
+  );
     constructor() {
         if (isPlatformBrowser(this.platformId)) {
             const storedItems = this.readPersistedItems();
