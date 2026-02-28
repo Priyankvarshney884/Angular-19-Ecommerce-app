@@ -1,9 +1,9 @@
 // Production defaults. Angular CLI swaps this file in development mode.
 export const environment = {
   production: true,
-  apiBaseUrl: '/api',
+  apiBaseUrl: './mock-api',
   features: {
-    mockApi: false,
+    mockApi: true,
     enableCheckout: true,
     enableCms: true
   }
