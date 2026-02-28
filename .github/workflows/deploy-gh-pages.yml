@@ -41,8 +41,27 @@ jobs:
           fi
           npm run build -- --configuration production --base-href "$BASE_HREF"
 
+      - name: Resolve deploy directory
+        id: resolve_dir
+        run: |
+          if [ -f dist/angular2026/browser/index.html ]; then
+            DEPLOY_DIR="dist/angular2026/browser"
+          elif [ -f dist/angular2026/index.html ]; then
+            DEPLOY_DIR="dist/angular2026"
+          else
+            DEPLOY_DIR="$(find dist -type f -name index.html | head -n 1 | xargs dirname)"
+          fi
+
+          if [ -z "$DEPLOY_DIR" ] || [ ! -f "$DEPLOY_DIR/index.html" ]; then
+            echo "Could not find build output with index.html under dist/"
+            exit 1
+          fi
+
+          echo "Resolved deploy directory: $DEPLOY_DIR"
+          echo "dir=$DEPLOY_DIR" >> "$GITHUB_OUTPUT"
+
       - name: SPA fallback for GitHub Pages
-        run: cp dist/angular2026/browser/index.html dist/angular2026/browser/404.html
+        run: cp "${{ steps.resolve_dir.outputs.dir }}/index.html" "${{ steps.resolve_dir.outputs.dir }}/404.html"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -50,7 +69,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/angular2026/browser
+          path: ${{ steps.resolve_dir.outputs.dir }}
 
   deploy:
     environment:
