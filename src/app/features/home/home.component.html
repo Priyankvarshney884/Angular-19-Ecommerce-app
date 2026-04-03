@@ -1,13 +1,273 @@
-<section class="home">
-  @if (!cmsEnabled) {
-    <p class="state error">CMS rendering is disabled by configuration.</p>
-  } @else if (cmsFacade.loading()) {
-    <p class="state">Loading home layout...</p>
-  } @else if (cmsFacade.error()) {
-    <p class="state error">{{ cmsFacade.error() }}</p>
-  } @else {
-    @if (cmsFacade.homeLayout(); as layout) {
-      <app-cms-page-layout [layout]="layout" />
-    }
-  }
+<!-- Custom Header -->
+<header class="gt-header">
+  <div class="header-container">
+    <div class="header-top">
+      <!-- Logo Section -->
+      <div class="logo-section">
+        <div class="logo">
+          <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="45" height="45" rx="10" fill="#2ecc71"/>
+            <circle cx="22.5" cy="22.5" r="8" fill="white"/>
+            <path d="M22.5 18V27M18 22.5H27" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <div class="logo-text">
+            <h1>GT Kirana</h1>
+            <p class="tagline">Fresh & Fast</p>
+          </div>
+        </div>
+        <div class="delivery-badge">
+          <span class="badge-icon">⚡</span>
+          <div class="badge-text">
+            <strong>Delivery in 30 minutes</strong>
+            <small>Ghaziabad, Uttar Pradesh</small>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Search Bar -->
+      <div class="search-section">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder='Search "bread"' class="search-input">
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button class="action-btn login-btn">
+          <span>Login</span>
+        </button>
+        <button class="action-btn cart-btn">
+          <span class="cart-icon">🛒</span>
+          <span>My Cart</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Hero Banner -->
+<section class="hero-banner">
+  <div class="banner-container">
+    <div class="banner-content">
+      <h2 class="banner-title">Stock up on daily essentials</h2>
+      <p class="banner-subtitle">Get farm-fresh goodness & a range of exotic fruits, vegetables, eggs & more</p>
+      <button class="shop-now-btn">Shop Now</button>
+    </div>
+    <div class="banner-image">
+      <div class="product-showcase">
+        <div class="product-item milk">🥛</div>
+        <div class="product-item banana">🍌</div>
+        <div class="product-item broccoli">🥦</div>
+        <div class="product-item apple">🍎</div>
+        <div class="product-item carrot">🥕</div>
+        <div class="product-item orange">🍊</div>
+        <div class="product-item eggs">🥚</div>
+        <div class="product-item grapes">🍇</div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- Promotional Carousel -->
+<section class="promo-carousel">
+  <div class="carousel-container">
+    <div class="carousel-wrapper">
+      @for (slide of promoSlides; track slide.id) {
+        <div class="carousel-slide"
+             [class.active]="currentSlide() === $index"
+             [style.background]="slide.color">
+          <div class="slide-content">
+            <div class="slide-text">
+              <span class="discount-badge">{{ slide.discount }}</span>
+              <h2>{{ slide.title }}</h2>
+              <p>{{ slide.subtitle }}</p>
+              <button class="shop-btn">Shop Now →</button>
+            </div>
+            <div class="slide-image">
+              <span class="promo-icon">{{ slide.image }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    
+    <!-- Carousel Controls -->
+    <button class="carousel-btn prev" (click)="prevSlide()">‹</button>
+    <button class="carousel-btn next" (click)="nextSlide()">›</button>
+    
+    <!-- Carousel Indicators -->
+    <div class="carousel-indicators">
+      @for (slide of promoSlides; track slide.id) {
+        <button
+          class="indicator"
+          [class.active]="currentSlide() === $index"
+          (click)="goToSlide($index)">
+        </button>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="products-section">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>🌟 Featured Products</h2>
+      <a href="/products" class="view-all">View All →</a>
+    </div>
+    <div class="products-grid">
+      @for (product of featuredProducts; track product.id) {
+        <div class="product-card">
+          <div class="product-image">
+            <span class="product-icon">{{ product.image }}</span>
+            @if (product.discount) {
+              <span class="discount-tag">{{ product.discount }}% OFF</span>
+            }
+          </div>
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="unit">{{ product.unit }}</p>
+            <div class="rating">
+              <span class="stars">⭐ {{ product.rating }}</span>
+            </div>
+            <div class="price-row">
+              <div class="prices">
+                <span class="current-price">₹{{ product.price }}</span>
+                @if (product.originalPrice) {
+                  <span class="original-price">₹{{ product.originalPrice }}</span>
+                }
+              </div>
+              <button class="add-btn">Add +</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Bestsellers Section -->
+<section class="products-section bestsellers">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>🔥 Bestsellers</h2>
+      <a href="/products" class="view-all">View All →</a>
+    </div>
+    <div class="products-grid">
+      @for (product of bestsellers; track product.id) {
+        <div class="product-card">
+          <div class="product-image">
+            <span class="product-icon">{{ product.image }}</span>
+            @if (product.discount) {
+              <span class="discount-tag">{{ product.discount }}% OFF</span>
+            }
+          </div>
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="unit">{{ product.unit }}</p>
+            <div class="rating">
+              <span class="stars">⭐ {{ product.rating }}</span>
+            </div>
+            <div class="price-row">
+              <div class="prices">
+                <span class="current-price">₹{{ product.price }}</span>
+                @if (product.originalPrice) {
+                  <span class="original-price">₹{{ product.originalPrice }}</span>
+                }
+              </div>
+              <button class="add-btn">Add +</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Snacks & Beverages Section -->
+<section class="products-section snacks">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>🍿 Snacks & Beverages</h2>
+      <a href="/products" class="view-all">View All →</a>
+    </div>
+    <div class="products-grid">
+      @for (product of snacks; track product.id) {
+        <div class="product-card">
+          <div class="product-image">
+            <span class="product-icon">{{ product.image }}</span>
+          </div>
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="unit">{{ product.unit }}</p>
+            <div class="rating">
+              <span class="stars">⭐ {{ product.rating }}</span>
+            </div>
+            <div class="price-row">
+              <div class="prices">
+                <span class="current-price">₹{{ product.price }}</span>
+              </div>
+              <button class="add-btn">Add +</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Category Banners -->
+<section class="category-banners">
+  <div class="banners-container">
+    <!-- Pharmacy Banner -->
+    <div class="category-card pharmacy-card">
+      <div class="card-content">
+        <h3>Pharmacy at your doorstep!</h3>
+        <p>Cough syrups, pain relief sprays & more</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+      <div class="card-image">
+        <div class="product-icons">
+          <span class="icon">💊</span>
+          <span class="icon">🩹</span>
+          <span class="icon">🧴</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pet Care Banner -->
+    <div class="category-card petcare-card">
+      <div class="card-content">
+        <h3>Pet care supplies at your door</h3>
+        <p>Food, treats, toys & more</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+      <div class="card-image">
+        <div class="product-icons">
+          <span class="icon">🐕</span>
+          <span class="icon">🐈</span>
+          <span class="icon">🦴</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Baby Care Banner -->
+    <div class="category-card babycare-card">
+      <div class="card-content">
+        <h3>No time for a diaper run?</h3>
+        <p>Get baby care essentials</p>
+        <button class="order-btn">Order Now</button>
+      </div>
+      <div class="card-image">
+        <div class="product-icons">
+          <span class="icon">👶</span>
+          <span class="icon">🍼</span>
+          <span class="icon">🧷</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Original CMS Content (if enabled) -->
