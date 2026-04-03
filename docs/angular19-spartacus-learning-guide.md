@@ -358,3 +358,108 @@ Use this rule:
 - Output migration docs: https://v19.angular.dev/reference/migrations/outputs
 - SSR guide: https://v19.angular.dev/guide/ssr
 - Angular roadmap status: https://v19.angular.dev/roadmap
+
+
+## 16) Post-Phase-6: SAP Commerce (OCC API) Precision Track
+After you complete Phase 1-6, switch from mock APIs to SAP Commerce Cloud OCC APIs for real enterprise flow learning.
+
+### 16.1 Prerequisites
+- SAP Commerce environment with OCC enabled (`/occ/v2`).
+- Valid `baseSite` (example: `electronics-spa`).
+- OAuth client credentials for storefront login/token exchange.
+- CORS allowlist updated for your Angular dev host.
+- One test catalog with products, stock, prices, and at least one checkout-capable store.
+
+### 16.2 Required Runtime Config
+Create/extend config keys in your app config service:
+- `occ.baseUrl`
+- `occ.prefix` (default `/occ/v2`)
+- `occ.baseSite`
+- `occ.defaultLanguage`
+- `occ.defaultCurrency`
+- `occ.clientId`
+- `occ.clientSecret` (avoid shipping to browser in production; use backend-for-frontend where possible)
+
+### 16.3 Phase 7: OCC Foundation Layer
+1. Build `OccEndpointsService` to generate URLs centrally.
+2. Add typed OCC DTOs in `occ/models/*`.
+3. Add normalizers/converters in adapters to map OCC DTO -> app domain model.
+4. Add shared OCC error mapper (`401`, `403`, `404`, `409`, `422` handling).
+
+Definition of done:
+- No feature/facade builds raw OCC URL strings directly.
+
+### 16.4 Phase 8: Auth + User Context (Real Login)
+1. Implement `AuthAdapter` with token APIs.
+2. Add `AuthInterceptor` to attach bearer token.
+3. Implement login/logout/refresh in `AuthFacade`.
+4. Implement current user load (`users/current` profile summary).
+
+Definition of done:
+- User can log in with SAP Commerce credentials and session survives refresh.
+
+### 16.5 Phase 9: Product & Search Integration
+1. Replace mock product list with OCC search endpoint.
+2. Replace mock product detail with OCC product detail endpoint.
+3. Map pagination/sort/facets from OCC response to UI models.
+4. Keep `ProductFacade` API stable so UI components do not change heavily.
+
+Definition of done:
+- Product list/detail pages run fully on SAP Commerce data.
+
+### 16.6 Phase 10: Cart Integration (Guest + Auth)
+1. Implement create/load active cart.
+2. Implement add/update/remove entry APIs.
+3. Implement merge cart strategy on login.
+4. Add cart validation and stock/price refresh handling.
+
+Definition of done:
+- Full cart lifecycle works against SAP Commerce OCC.
+
+### 16.7 Phase 11: Checkout Integration
+1. Address step: load/add/select delivery address.
+2. Delivery mode step: load/select shipping mode.
+3. Payment step: tokenized mock or supported payment integration path.
+4. Place order step with final order confirmation fetch.
+
+Definition of done:
+- End-to-end checkout shell works with OCC APIs.
+
+### 16.8 Phase 12: Hardening for Spartacus-Like Quality
+1. Add contract tests for adapters using real OCC sample payloads.
+2. Add retry/backoff only for safe idempotent reads.
+3. Add event service (`CartUpdated`, `UserLoggedIn`, `CheckoutStepCompleted`).
+4. Add SSR-safe guards for browser-only APIs in auth/cart flows.
+
+Definition of done:
+- Integration remains stable through backend payload/latency variations.
+
+### 16.9 OCC Endpoint Mapping (Typical)
+- Login token: `/authorizationserver/oauth/token`
+- Product search: `/occ/v2/{baseSite}/products/search`
+- Product detail: `/occ/v2/{baseSite}/products/{code}`
+- Current user: `/occ/v2/{baseSite}/users/current`
+- Carts: `/occ/v2/{baseSite}/users/{userId}/carts`
+- Cart entries: `/occ/v2/{baseSite}/users/{userId}/carts/{cartId}/entries`
+- Checkout resources: `/deliveryaddresses`, `/deliverymodes`, `/paymentdetails`, `/orders`
+
+Note:
+- Exact endpoints can vary by SAP Commerce version and extensions. Keep endpoint paths configurable via `OccEndpointsService`.
+
+## 17) Hindi Direction (Quick Action Plan)
+- Step 1: Pehle Node `20.x` par SSR + i18n build stable karo, tabhi integration start karo.
+- Step 2: Mock APIs ko turant remove mat karo; adapter layer me parallel OCC integration karo.
+- Step 3: `Facade -> Connector -> Adapter` boundary strict rakho, UI me direct `HttpClient` bilkul mat use karo.
+- Step 4: Login flow pehle complete karo, uske baad hi cart aur checkout integrate karo.
+- Step 5: `baseSite`, `language`, `currency` ko config-driven banao, hardcoded values avoid karo.
+- Step 6: Har major phase ke baad regression test chalao: login -> product -> add to cart -> checkout.
+- Step 7: Agar OCC payload change ho, sirf adapter/normalizer update karo, feature components nahi.
+
+---
+
+## References
+- Angular v19 docs: https://v19.angular.dev
+- Signal inputs migration (`v19` production ready): https://angular.dev/reference/migrations/signal-inputs
+- Output migration docs: https://v19.angular.dev/reference/migrations/outputs
+- SSR guide: https://v19.angular.dev/guide/ssr
+- Angular roadmap status: https://v19.angular.dev/roadmap
